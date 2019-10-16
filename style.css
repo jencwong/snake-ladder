@@ -20,12 +20,12 @@ h1 {
 }
 
 #child1 {
-  flex: 10;
+  flex: 9.5;
   margin: 0;
 }
 
 #child2 {
-  flex: 2;
+  flex: 2.5;
   border: 1px solid black;
 }
 
@@ -72,12 +72,38 @@ h1 {
   right: 0px; */
 }
 
-#dice1,
-#dice2 {
-  max-width: 75px;
-  max-height: 75px;
+#placedice1,
+#placedice2 {
+  max-width: 110px;
+  max-height: 90px;
+  margin: 0;
 }
 
+#dice1,
+#dice2 {
+  display: inline;
+  max-width: 85px;
+  max-height: 85px;
+  padding: 5px;
+}
+
+.diceface {
+  display: none;
+}
+
+iframe {
+  text-align: left;
+}
+#face1,
+#face2,
+#face3,
+#face4,
+#face5,
+#face6 {
+  max-width: 75px;
+  max-height: 75px;
+  padding: 8px;
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
