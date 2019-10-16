@@ -8,12 +8,13 @@ $(() => {
   let diceNum2 = 0;
   let playerName = "";
   let currentPosition = 0;
+  let catImg = "";
 
   //  callback functions here:
 
   //  get cat picture function
   const pullCat = table => {
-    const catImg = $("<img>")
+    catImg = $("<img>")
       .addClass("catpix")
       .attr("src", table[0].url);
     $("body").append(catImg);
@@ -25,12 +26,14 @@ $(() => {
     diceNum1 = Math.floor(Math.random() * 6 + 1);
     console.log(diceNum1);
     // hide the current dice
-    $("#dice1").css("display", "none");
+    $("#dice1").hide();
+
     // now display the roll
     $("#placedice1").append(
       $(".diceface")
         .children()
         .eq(diceNum1 - 1)
+        .clone()
         .css("display", "block")
     );
   };
@@ -39,12 +42,13 @@ $(() => {
     diceNum2 = Math.floor(Math.random() * 6 + 1);
     console.log(diceNum2);
     // hide the current dice
-    $("#dice2").css("display", "none");
+    $("#dice2").hide();
     // now display the roll
     $("#placedice2").append(
       $(".diceface")
         .children()
         .eq(diceNum2 - 1)
+        .clone()
         .css("display", "block")
     );
     // remind the player to answer question
@@ -84,30 +88,81 @@ $(() => {
       //
       //   console.log(typeof $("#main-grid").children()[0].id);
       type = Number(type);
-      console.log(typeof type);
+      //   console.log(typeof type);
     }
   };
 
   const checkAnswer = () => {
-    const correctAnswer = currentPosition + diceNum1 + diceNum2;
+    let correctAnswer = currentPosition + diceNum1 + diceNum2;
+    if (correctAnswer > 100) {
+      correctAnswer = Math.min(correctAnswer, 100);
+    } else {
+      correctAnswer = Math.max(correctAnswer, 0);
+    }
     console.log(correctAnswer);
+
     const playerAnswer = Number($("#input-box2").val());
     console.log(playerAnswer);
-    if (playerAnswer === correctAnswer) {
+    // set conditions:
+    if (playerAnswer === correctAnswer && correctAnswer <= 100) {
       currentPosition = correctAnswer;
-      console.log(
-        `Correct! ${playerName} can move forward to ${currentPosition}`
+      //   insert modal
+      $("#myModal").css("display", "flex");
+
+      $("#player-name").text(
+        `Correct! ${playerName} can move forward to box #${currentPosition}`
       );
-    } else {
-      currentPosition -= correctAnswer;
-      console.log(
-        `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to ${currentPosition}`
+      $(`#${currentPosition}`).append(catImg);
+    } else if (playerAnswer === correctAnswer && correctAnswer > 100) {
+      currentPosition = Math.min(correctAnswer, 100);
+      //   insert modal
+      $("#myModal").css("display", "flex");
+
+      $("#player-name").text(
+        `Congratulations ${playerName}!! You reached the finish line!`
       );
+      $(`#${currentPosition}`).append(catImg);
+    } else if (playerAnswer !== correctAnswer) {
+      if ((currentPosition -= correctAnswer > 0)) {
+        currentPosition -= correctAnswer;
+        //   insert modal
+        $("#myModal").css("display", "flex");
+        $("#player-name").text(
+          `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+        );
+        $(`#${currentPosition}`).append(catImg);
+      } else {
+        currentPosition = 1;
+        $("#myModal").css("display", "flex");
+        $("#player-name").text(
+          `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+        );
+        $(`#${currentPosition}`).append(catImg);
+      }
     }
+    // } else if (
+    //   playerAnswer !== correctAnswer &&
+    //   currentPosition < correctAnswer
+    // ) {
+    //   currentPosition -= correctAnswer;
+    //   //   insert modal
+    //   $("#myModal").css("display", "flex");
+
+    //   $("#player-name").text(
+    //     `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+    //   );
+    //   $(`#${currentPosition}`).append(catImg);
+    // }
   };
 
-  //   //   rollDice1();
-  //   //   rollDice2();
+  const resetDice = () => {
+    $(".dices").show();
+    $(".faces").hide();
+    $("#input-box2").val("");
+  };
+
+  // Game starts below:
+
   $(".close").on("click", event => {
     $("#myModal").css("display", "none");
   });
@@ -119,5 +174,6 @@ $(() => {
     event.preventDefault();
     convert();
     checkAnswer();
+    resetDice();
   });
 });
