@@ -66,11 +66,11 @@ $(() => {
   };
 
   const resetGame = () => {
-    let diceNum1 = 0;
-    let diceNum2 = 0;
-    let playerName = "";
-    let currentPosition = 0;
-    let catImg = "";
+    diceNum1 = 0;
+    diceNum2 = 0;
+    playerName = "";
+    currentPosition = 0;
+    catImg = "";
     $("100").detach(catImg);
   };
 
@@ -80,9 +80,9 @@ $(() => {
       //   .children()
       //   .eq(5)[0].id;
       //
-      //   console.log(typeof $("#main-grid").children()[0].id);
-      type = Number(type);
+      //console.log(typeof $("#main-grid").children()[0].id);
       //   console.log(typeof type);
+      type = Number(type);
     }
   };
 
@@ -171,5 +171,15 @@ $(() => {
     convert();
     checkAnswer();
     resetDice();
+  });
+
+  $("#trophy").on("click", event => {
+    catImg.detach();
+    resetGame();
+    $.ajax({ url: endpoint }).then(pullCat);
+  });
+
+  $("#button3").on("click", event => {
+    resetGame();
   });
 });
