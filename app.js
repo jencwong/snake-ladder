@@ -59,6 +59,83 @@ $(() => {
     );
   };
 
+  const resetDice = () => {
+    $(".dices").show();
+    $(".faces").hide();
+    $("#input-box2").val("");
+  };
+
+  const resetGame = () => {
+    let diceNum1 = 0;
+    let diceNum2 = 0;
+    let playerName = "";
+    let currentPosition = 0;
+    let catImg = "";
+    $("100").detach(catImg);
+  };
+
+  const convert = () => {
+    for (i = 0; i < 100; i++) {
+      let type = $("#main-grid").children()[i].id;
+      //   .children()
+      //   .eq(5)[0].id;
+      //
+      //   console.log(typeof $("#main-grid").children()[0].id);
+      type = Number(type);
+      //   console.log(typeof type);
+    }
+  };
+
+  const checkAnswer = () => {
+    let change = diceNum1 + diceNum2;
+    let correctAnswer = currentPosition + change;
+    if (correctAnswer > 100) {
+      correctAnswer = Math.min(correctAnswer, 100);
+    } else {
+      correctAnswer = Math.max(correctAnswer, 0);
+    }
+    console.log(correctAnswer);
+
+    const playerAnswer = Math.min(Number($("#input-box2").val()), 100);
+    // playerAnswer = Math.min(playerAnswer, 100);
+    console.log(playerAnswer);
+    // set conditions:
+    if (playerAnswer === correctAnswer && correctAnswer < 100) {
+      currentPosition = correctAnswer;
+      //   insert modal
+      $("#myModal").css("display", "flex");
+
+      $("#player-name").text(
+        `Correct! ${playerName} can move forward to box #${currentPosition}`
+      );
+      $(`#${currentPosition}`).append(catImg);
+    } else if (playerAnswer === correctAnswer && correctAnswer === 100) {
+      currentPosition = Math.min(correctAnswer, 100);
+      //   insert modal
+      $("#myModal").css("display", "flex");
+
+      $("#player-name").text(
+        `Congratulations ${playerName}!! You reached the finish line! Go ahead and click on the trophy to reveal your prize!`
+      );
+      $(`#${currentPosition}`).append(catImg);
+    } else if (playerAnswer !== correctAnswer && currentPosition > change) {
+      currentPosition -= change;
+      //   insert modal
+      $("#myModal").css("display", "flex");
+      $("#player-name").text(
+        `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+      );
+      $(`#${currentPosition}`).append(catImg);
+    } else if (playerAnswer !== correctAnswer && currentPosition < change) {
+      currentPosition = 1;
+      $("#myModal").css("display", "flex");
+      $("#player-name").text(
+        `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+      );
+      $(`#${currentPosition}`).append(catImg);
+    }
+  };
+
   //   event handlers here
   $.ajax({ url: endpoint }).then(pullCat);
 
@@ -77,92 +154,11 @@ $(() => {
       $("#player-name").text(
         `Hello ${playerName}. Let's begin by clicking each dice one by one.`
       );
+      $("#input-box1").val("");
     }
   });
 
-  const convert = () => {
-    for (i = 0; i < 100; i++) {
-      let type = $("#main-grid").children()[i].id;
-      //   .children()
-      //   .eq(5)[0].id;
-      //
-      //   console.log(typeof $("#main-grid").children()[0].id);
-      type = Number(type);
-      //   console.log(typeof type);
-    }
-  };
-
-  const checkAnswer = () => {
-    let correctAnswer = currentPosition + diceNum1 + diceNum2;
-    if (correctAnswer > 100) {
-      correctAnswer = Math.min(correctAnswer, 100);
-    } else {
-      correctAnswer = Math.max(correctAnswer, 0);
-    }
-    console.log(correctAnswer);
-
-    const playerAnswer = Number($("#input-box2").val());
-    console.log(playerAnswer);
-    // set conditions:
-    if (playerAnswer === correctAnswer && correctAnswer <= 100) {
-      currentPosition = correctAnswer;
-      //   insert modal
-      $("#myModal").css("display", "flex");
-
-      $("#player-name").text(
-        `Correct! ${playerName} can move forward to box #${currentPosition}`
-      );
-      $(`#${currentPosition}`).append(catImg);
-    } else if (playerAnswer === correctAnswer && correctAnswer > 100) {
-      currentPosition = Math.min(correctAnswer, 100);
-      //   insert modal
-      $("#myModal").css("display", "flex");
-
-      $("#player-name").text(
-        `Congratulations ${playerName}!! You reached the finish line!`
-      );
-      $(`#${currentPosition}`).append(catImg);
-    } else if (playerAnswer !== correctAnswer) {
-      if ((currentPosition -= correctAnswer > 0)) {
-        currentPosition -= correctAnswer;
-        //   insert modal
-        $("#myModal").css("display", "flex");
-        $("#player-name").text(
-          `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
-        );
-        $(`#${currentPosition}`).append(catImg);
-      } else {
-        currentPosition = 1;
-        $("#myModal").css("display", "flex");
-        $("#player-name").text(
-          `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
-        );
-        $(`#${currentPosition}`).append(catImg);
-      }
-    }
-    // } else if (
-    //   playerAnswer !== correctAnswer &&
-    //   currentPosition < correctAnswer
-    // ) {
-    //   currentPosition -= correctAnswer;
-    //   //   insert modal
-    //   $("#myModal").css("display", "flex");
-
-    //   $("#player-name").text(
-    //     `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
-    //   );
-    //   $(`#${currentPosition}`).append(catImg);
-    // }
-  };
-
-  const resetDice = () => {
-    $(".dices").show();
-    $(".faces").hide();
-    $("#input-box2").val("");
-  };
-
   // Game starts below:
-
   $(".close").on("click", event => {
     $("#myModal").css("display", "none");
   });
