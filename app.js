@@ -28,7 +28,7 @@ $(() => {
     catImg = $("<img>")
       .addClass("catpix")
       .attr("src", table[0].url);
-    $("body").append(catImg);
+    $("#startbox").append(catImg);
   };
 
   //   get winner stickery on click of trophy
@@ -148,7 +148,10 @@ $(() => {
         `Correct! ${playerName} can move forward to box #${currentPosition}`
       );
       $.ajax({ url: endpoint4 }).then(pullLadder);
-      $(`#${currentPosition}`).append(catImg);
+
+      setTimeout(function() {
+        $(`#${currentPosition}`).append(catImg);
+      }, 4000);
     } else if (playerAnswer === correctAnswer && correctAnswer === 100) {
       currentPosition = Math.min(correctAnswer, 100);
       //   insert modal
@@ -158,7 +161,10 @@ $(() => {
         `Congratulations ${playerName}!! You reached the finish line! Go ahead and click on the trophy to reveal your prize!`
       );
       $.ajax({ url: endpoint4 }).then(pullLadder);
-      $(`#${currentPosition}`).append(catImg);
+
+      setTimeout(function() {
+        $(`#${currentPosition}`).append(catImg);
+      }, 4000);
 
       $("#trophy").on("click", event => {
         catImg.detach();
@@ -177,7 +183,10 @@ $(() => {
       );
       $.ajax({ url: endpoint3 }).then(pullSnake);
       currentPosition -= change;
-      $(`#${currentPosition}`).append(catImg);
+
+      setTimeout(function() {
+        $(`#${currentPosition}`).append(catImg);
+      }, 500);
     } else if (playerAnswer !== correctAnswer && currentPosition < change) {
       $("#myModal").css("display", "flex");
       $("#player-name").text(

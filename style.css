@@ -4,49 +4,77 @@
 
 body {
   border: 0;
-  margin: 0;
+  margin: auto;
   padding: 0;
+  text-align: center;
 }
 
 h1 {
   color: black;
   text-align: center;
-  font-size: 1.5em;
+  margin: 3% 0;
+  max-width: 90vw;
+  max-height: 5vh;
+  padding: 0;
+  font-size: 1.2em;
 }
 
 .container {
   display: flex;
-  margin: auto;
+  margin: auto auto 5% auto;
   flex-direction: row-reverse;
+  flex-wrap: wrap;
   width: 100%;
 }
 
 #child1 {
   flex: 9.5;
+  width: 75vw;
   margin: 0;
   display: relative;
 }
 
+#child2{
+flex: 2.5;
+width: 25vw
+}
 
-.aside,
+#startbox{
+    flex: 4;
+    width: 25vw;
+    height: 5vh;
+    text-align: center;
+    padding: 3%;
+    font-size: 1em;
+    /* display: block; */
+    vertical-align: middle;
+    display: table-cell;
+    border: 2px solid dimgray;
+    position: relative;
+    left: 15%;
+    background-color: rgba(48, 165, 27, 0.657);
+    color: white;
+}
+
+.aside, 
 #playerName {
-  flex: 2.5;
+  flex: 3;
   border: 1px solid rgb(134, 129, 129);
   border-radius: 10px;
   background-color: aliceblue;
-  width: 15vw;
-  height: 90vw;
+  width: 14vw;
+  height: 70vw;
   text-align: center;
   position: relative;
-  margin: auto;
+  margin: 0;
   font-size: 0.75em;
 }
 
 
 #main-grid {
   display: flex;
-  width: 80vw;
-  height: 90vw;
+  width: 70vw;
+  height: 70vw;
   background-color: aliceblue;
   margin: auto;
   /* margin-top: auto;
@@ -63,7 +91,7 @@ h1 {
 }
 
 .square {
-  font-size: 0.5em;
+  font-size: 0.45em;
   border: 1px solid lightslategray;
   opacity: 0.8;
   width: 10%;
@@ -84,26 +112,32 @@ h1 {
 
 #input-box1{
     display: block;
-    width: 85%;
-    height: 5%;
+    width: 80%;
+    height: 7%;
     /* padding: 3%; */
-    margin: 4%;
+    margin: 5% auto;
+    padding: auto;
     text-align: center;
     border-color: rgba(0, 0, 0, 0.4)
 }
 
 #button1, #button2{
+    display: inline-block;
     color: white;
     background-color: rgba(48, 165, 27, 0.657);
-    height: 5%;
+    height: 7%;
     /* padding: 3% */
-    margin: 4%
+    width: 80%;
+    margin: 5% auto;
+    padding: 0;
+    font-size: 0.5em;
+    text-align: center;
 }
 
 #input-box2{
     width: 85%;
-    height: 5%;
-    margin: 4%;
+    height: 7%;
+    margin: 5%;
     border-color: rgba(0, 0, 0, 0.4);
     text-align: center;
 }
@@ -112,8 +146,10 @@ h1 {
     color: white;
     background-color: rgb(232,0,0);
     width: 85%;
-    height: 8%;
-    margin: 4%
+    height: 12%;
+    text-align: center;
+    margin: 5%;
+    padding: 1%;
 }
 /* .aside,
 form {
@@ -121,13 +157,13 @@ form {
   height: 15vh;
 } */
 .catpix {
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 4.5vw;
+  max-height: 4.5vw;
 }
 
 #trophy {
-  max-width: 50%;
-  max-height: 50%;
+  max-width: 40%;
+  max-height: 40%;
   margin: auto;
   /* position: fixed; */
   /* bottom: 20px;
@@ -162,8 +198,8 @@ iframe {
   justify-content: left;
   transform: scaleX(-1);
   display: block;
-  width: 80%;
-  height: 10%;
+  width: 85%;
+  height: 20%;
 }
 
 #face1,
@@ -185,8 +221,8 @@ iframe {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 80px; /* Location of the box */
-  left: -50px;
-  top: 25px;
+  left: -17%;
+  top: 4%;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -207,6 +243,11 @@ iframe {
   border-radius: 20px;
 }
 
+#player-name {
+    font-size:0.5em;
+    padding: 0;
+}
+
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -221,56 +262,85 @@ iframe {
   text-decoration: none;
   cursor: pointer;
 }
-.winner,
 .snake {
   /* to overlay image on top of div */
   position: absolute;
-  height: 50px;
-  width: 50px;
+  height: 7vw;
+  width: 7vw;
   top: 0;
   left: 0;
 }
 
+.winner {
+  /* to overlay image on top of div */
+  position: absolute;
+  width: 75vw;
+  height: 59vw;
+  
+  top: 0;
+  left: 0;
+}
+
+
 .ladder 
 /* to overlay image on top of div */ {
   position: absolute;
-  height: 35px;
-  width: 35px;
+  height: 5vw;
+  width: 5vw;
   top: 0;
   left: 0;
 }
 
 /* Adjust styling for other devicse below */
 
-/* @media(min-width: 1000px) {
+@media (min-width: 600px) {
+  body{
+      text-align: center;
+  }
+  
 
-    #main-grid {
-        display: flex;
-        width: 800px;
-        height: 800px;
-        margin-left: 25px;
+
+
+
+.container {
+display: flex;
+flex-direction: row-reverse;
+margin: auto auto 0 auto;
+flex-wrap: wrap;
+width: 100%;
 }
 
-.square {
-    width: 40px;
-    height: 40px;
-} */
-
-@media (min-width: 600px) {
-  .container {
-    flex-direction: row-reverse;
-  }
-
   #child1{
-      flex: 9.5;
+    flex: 9.5;
+    width: 75vw;
+    height: 75vw;
+    margin: 0;
+    display: relative;
   }
   .main-grid {
-    width: 60vw;
-    height: 60vw;
+  display: flex;
+  width: 70vw;
+  height: 70vw;
+  background-color: aliceblue;
+  margin: auto;
+  /* margin-top: auto;
+  margin-left: 20px;
+  margin-right: 0; */
+  flex-wrap: wrap-reverse;
+  flex-direction: row;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: relative;
+  border-radius: 10px;
+    /* width: 60vw;
+    height: 60vw; */
   }
 
   #child2{
       flex: 2.5;
+      width: 25vw;
   }
 
   .square {
@@ -279,19 +349,29 @@ iframe {
 
 h1{
     font-size: 2em;
+    text-align: center;
+    margin: 3% auto;
     width: 80vw;
+    line-height: 10vh;
+    padding: 5%;
+    vertical-align: top;
+    display: inline;
 }
 
-#child2,
+
 .aside,
 form {
-    width: 15vw;
-    height: 100vh;
+    width: 14vw;
+    height: 70vw;
 }
 
 iframe {
-    width: 180px;
-    height: 120px;
+    width: 85%;
+    height: 20%;
+}
+
+#input-box1, #input-box2, #button1, #button2, #button3{
+    font-size: 1.5em;
 }
 
   .modal {
@@ -301,8 +381,8 @@ iframe {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
+    left: -18%;
+    top: 10%;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
@@ -310,4 +390,11 @@ iframe {
     background-color: rgb(0, 0, 0); /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
   }
+
+  .modal-content, #player-name {
+   
+    font-size: 1.25em;
+    
+  }
+
 }
