@@ -11,32 +11,47 @@ body {
 h1 {
   color: black;
   text-align: center;
+  font-size: 1.5em;
 }
 
 .container {
   display: flex;
   margin: auto;
-  width: 80%;
+  flex-direction: row-reverse;
+  width: 100%;
 }
 
 #child1 {
   flex: 9.5;
   margin: 0;
+  display: relative;
 }
 
-#child2 {
+
+.aside,
+#playerName {
   flex: 2.5;
-  border: 1px solid black;
+  border: 1px solid rgb(134, 129, 129);
+  border-radius: 10px;
+  background-color: aliceblue;
+  width: 15vw;
+  height: 90vw;
+  text-align: center;
+  position: relative;
+  margin: auto;
+  font-size: 0.75em;
 }
+
 
 #main-grid {
   display: flex;
-  width: 800px;
-  height: 800px;
+  width: 80vw;
+  height: 90vw;
   background-color: aliceblue;
-  margin-top: auto;
-  margin-left: 50px;
-  margin-right: 0;
+  margin: auto;
+  /* margin-top: auto;
+  margin-left: 20px;
+  margin-right: 0; */
   flex-wrap: wrap-reverse;
   flex-direction: row;
   left: 0;
@@ -44,65 +59,123 @@ h1 {
   top: 0;
   bottom: 0;
   position: relative;
+  border-radius: 10px;
 }
 
 .square {
+  font-size: 0.5em;
   border: 1px solid lightslategray;
   opacity: 0.8;
-  width: 80px;
-  height: 80px;
+  width: 10%;
+  height: 10%;
   margin: 0;
   display: flex;
+  position: relative;
+  border-radius: 8px;
   /* flex: 1; */
   /* padding: 10px; */
   /* text-align: center; */
 }
 
+.square:hover {
+  border: 3px solid dimgray;
+  background-color: #888;
+}
+
+#input-box1{
+    display: block;
+    width: 85%;
+    height: 5%;
+    /* padding: 3%; */
+    margin: 4%;
+    text-align: center;
+    border-color: rgba(0, 0, 0, 0.4)
+}
+
+#button1, #button2{
+    color: white;
+    background-color: rgba(48, 165, 27, 0.657);
+    height: 5%;
+    /* padding: 3% */
+    margin: 4%
+}
+
+#input-box2{
+    width: 85%;
+    height: 5%;
+    margin: 4%;
+    border-color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+#button3{
+    color: white;
+    background-color: rgb(232,0,0);
+    width: 85%;
+    height: 8%;
+    margin: 4%
+}
+/* .aside,
+form {
+  width: 80vw;
+  height: 15vh;
+} */
 .catpix {
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 40px;
+  max-height: 40px;
 }
 
 #trophy {
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 50%;
+  max-height: 50%;
   margin: auto;
-  /* position: fixed;
-  bottom: 20px;
-  right: 0px; */
+  /* position: fixed; */
+  /* bottom: 20px;
+  right: 0px; */ */
 }
 
 #placedice1,
 #placedice2 {
-  max-width: 110px;
-  max-height: 90px;
+position: relative;
+  display: block;
+  max-width: 80%;
+  max-height: 15%;
   margin: 0;
 }
 
 #dice1,
 #dice2 {
-  display: inline;
-  max-width: 85px;
-  max-height: 85px;
-  padding: 5px;
+  display: block;
+  max-width: 80%;
+  max-height: 15%;
+  padding: 3px;
+  position: relative;
 }
 
 .diceface {
   display: none;
+  position: relative;
 }
 
 iframe {
-  text-align: left;
+    /* position: relative; */
+  justify-content: left;
+  transform: scaleX(-1);
+  display: block;
+  width: 80%;
+  height: 10%;
 }
+
 #face1,
 #face2,
 #face3,
 #face4,
 #face5,
 #face6 {
-  max-width: 75px;
-  max-height: 75px;
-  padding: 8px;
+    position: relative;
+  max-width: 80%;
+  max-height: 15%;
+  padding: 4px;
 }
 /* The Modal (background) */
 .modal {
@@ -111,9 +184,9 @@ iframe {
   align-items: flex-end;
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
+  padding-top: 80px; /* Location of the box */
+  left: -50px;
+  top: 25px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -123,19 +196,22 @@ iframe {
 
 /* Modal Content */
 .modal-content {
-  width: 200px;
-  margin-top: 10px;
-  margin-right: 20px;
+  width: 80px;
+  margin-top: 5px;
+  margin-right: 5px;
   background-color: #fefefe;
-  padding: 20px;
+  opacity: 0.9;
+  font-size: 0.5em;
+  padding: 5px;
   border: 1px solid #888;
+  border-radius: 20px;
 }
 
 /* The Close Button */
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -144,4 +220,94 @@ iframe {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+.winner,
+.snake {
+  /* to overlay image on top of div */
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  top: 0;
+  left: 0;
+}
+
+.ladder 
+/* to overlay image on top of div */ {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  top: 0;
+  left: 0;
+}
+
+/* Adjust styling for other devicse below */
+
+/* @media(min-width: 1000px) {
+
+    #main-grid {
+        display: flex;
+        width: 800px;
+        height: 800px;
+        margin-left: 25px;
+}
+
+.square {
+    width: 40px;
+    height: 40px;
+} */
+
+@media (min-width: 600px) {
+  .container {
+    flex-direction: row-reverse;
+  }
+
+  #child1{
+      flex: 9.5;
+  }
+  .main-grid {
+    width: 60vw;
+    height: 60vw;
+  }
+
+  #child2{
+      flex: 2.5;
+  }
+
+  .square {
+    font-size: 1em;
+  }
+
+h1{
+    font-size: 2em;
+    width: 80vw;
+}
+
+#child2,
+.aside,
+form {
+    width: 15vw;
+    height: 100vh;
+}
+
+iframe {
+    width: 180px;
+    height: 120px;
+}
+
+  .modal {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: flex-end;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
 }

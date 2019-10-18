@@ -17,6 +17,51 @@
   <body>
     <h1>Snake and Ladder Addition Game</h1>
     <div class="container">
+      <div id="child2">
+        <div class="aside">
+          <form id="playerName">
+            <input type="text" placeholder="name" id="input-box1" />
+            <button type="submit" id="button1">Submit</button>
+
+            <div id="myModal" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close">&times;</span>
+                <p id="player-name">Dialogue</p>
+              </div>
+            </div>
+
+            <iframe
+              src="https://giphy.com/embed/Mvi1ZqG17NSso"
+              frameBorder="0"
+              class="giphy-embed"
+              allowFullScreen
+            ></iframe>
+            <!-- The Modal -->
+            <div id="placedice1">
+              <img class="dices" id="dice1" src="images/dice.png" />
+            </div>
+            <div id="placedice2">
+              <img class="dices" id="dice2" src="images/dice.png" />
+            </div>
+
+            <!-- <p>
+                        <a href="https://giphy.com/stickers/Mvi1ZqG17NSso">via GIPHY</a>
+                      </p> -->
+            <input type="number" placeholder="result" id="input-box2" />
+            <button type="submit" id="button2">Submit</button>
+            <button type="submit" id="button3">Reset Game</button>
+          </form>
+        </div>
+        <div class="diceface">
+          <img class="faces" id="face1" src="images/face1.png" alt="one" />
+          <img class="faces" id="face2" src="images/face2.png" alt="two" />
+          <img class="faces" id="face3" src="images/face3.png" alt="three" />
+          <img class="faces" id="face4" src="images/face4.png" alt="four" />
+          <img class="faces" id="face5" src="images/face5.png" alt="five" />
+          <img class="faces" id="face6" src="images/face6.png" alt="six" />
+        </div>
+      </div>
       <div id="child1">
         <div id="main-grid">
           <div class="square" id="1">1</div>
@@ -122,53 +167,6 @@
           <div class="square" id="93">93</div>
           <div class="square" id="92">92</div>
           <div class="square" id="91">91</div>
-        </div>
-      </div>
-      <div id="child2">
-        <div class="aside">
-          <form id="playerName">
-            <input type="text" placeholder="name" id="input-box1" />
-            <button type="submit" id="button1">Submit</button>
-
-            <div id="myModal" class="modal">
-              <!-- Modal content -->
-              <div class="modal-content">
-                <span class="close">&times;</span>
-                <p id="player-name">Dialogue</p>
-              </div>
-            </div>
-
-            <iframe
-              src="https://giphy.com/embed/Mvi1ZqG17NSso"
-              width="180"
-              height="120"
-              frameBorder="0"
-              class="giphy-embed"
-              allowFullScreen
-            ></iframe>
-            <!-- The Modal -->
-            <div id="placedice1">
-              <img class="dices" id="dice1" src="images/dice.png" />
-            </div>
-            <div id="placedice2">
-              <img class="dices" id="dice2" src="images/dice.png" />
-            </div>
-
-            <!-- <p>
-            <a href="https://giphy.com/stickers/Mvi1ZqG17NSso">via GIPHY</a>
-          </p> -->
-            <input type="number" placeholder="result" id="input-box2" />
-            <button type="submit" id="button2">Submit</button>
-            <button type="submit" id="button3">Reset Game</button>
-          </form>
-        </div>
-        <div class="diceface">
-          <img class="faces" id="face1" src="images/face1.png" alt="one" />
-          <img class="faces" id="face2" src="images/face2.png" alt="two" />
-          <img class="faces" id="face3" src="images/face3.png" alt="three" />
-          <img class="faces" id="face4" src="images/face4.png" alt="four" />
-          <img class="faces" id="face5" src="images/face5.png" alt="five" />
-          <img class="faces" id="face6" src="images/face6.png" alt="six" />
         </div>
       </div>
     </div>
