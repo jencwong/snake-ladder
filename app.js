@@ -17,13 +17,35 @@ $(() => {
   let diceNum2 = 0;
   let playerName = "";
   let currentPosition = 0;
+  let previousPosition = "";
   let catImg = "";
   let winnerImg = "";
   let snakeImg = "";
+  const colors = ["#42f569", "#425df5", "#f54242", "#fff04f"];
 
   //  callback functions here:
+  //   color the squares:
+  const color = () => {
+    for (i = 0; i < 100; i++) {
+      $(".square")
+        .eq(i)
+        .css("background-color", colors[Math.floor(Math.random() * 4)]);
+    }
+  };
 
+  const greet = () => {
+    $("#myModal").css("display", "flex");
+    $("#player-name").text(`Hello, enter your name to get started.`);
+  };
   //  get cat picture for player function
+  // const pullCat = table => {
+  //   catImg = $("<img>")
+  //     .addClass("draggable")
+  //     .addClass("catpix")
+  //     .attr("src", table[0].url);
+  //   catImg.appendTo($("#startbox")).draggable();
+  // };
+
   const pullCat = table => {
     catImg = $("<img>")
       .addClass("catpix")
@@ -47,7 +69,7 @@ $(() => {
     snakeImg = $("<img>")
       .addClass("snake")
       .attr("src", image.data[0].images.original.url);
-    $(`#${currentPosition}`).append(snakeImg);
+    $(`#${previousPosition}`).append(snakeImg);
   };
 
   //   get snake climbing ladder giphy
@@ -55,16 +77,21 @@ $(() => {
     ladderImg = $("<img>")
       .addClass("ladder")
       .attr("src", giphy.data[0].images.original.url);
-    $(`#${currentPosition}`).append(ladderImg);
+    $(`#${previousPosition}`).append(ladderImg);
   };
 
   // generate random numbers from 1 to 6 inclusive for dice 1
 
-  const rollDice1 = () => {
+  const rollDice = () => {
     diceNum1 = Math.floor(Math.random() * 6 + 1);
     console.log(diceNum1);
+
+    diceNum2 = Math.floor(Math.random() * 6 + 1);
+    console.log(diceNum2);
+
     // hide the current dice
     $("#dice1").hide();
+    $("#dice2").hide();
 
     // now display the roll
     $("#placedice1").append(
@@ -72,22 +99,15 @@ $(() => {
         .children()
         .eq(diceNum1 - 1)
         .clone()
-        .css("display", "block")
+        .css("display", "inline")
     );
-  };
-
-  const rollDice2 = () => {
-    diceNum2 = Math.floor(Math.random() * 6 + 1);
-    console.log(diceNum2);
-    // hide the current dice
-    $("#dice2").hide();
     // now display the roll
     $("#placedice2").append(
       $(".diceface")
         .children()
         .eq(diceNum2 - 1)
         .clone()
-        .css("display", "block")
+        .css("display", "inline")
     );
     // remind the player to answer question
     $("#myModal").css("display", "flex");
@@ -96,6 +116,47 @@ $(() => {
       `${playerName}, please enter the square number you should move forward to.`
     );
   };
+
+  // Make the element draggable
+  const initDrag = event => {
+    $("#makeDraggable").draggable();
+  };
+  // $(".container").on("click", ".catpix", event => {
+  //   $(event.currentTarget).draggable({
+  //     containment: $(`#${currentPosition}`),
+  //     cursor: "move",
+  //     snap: $(`#${currentPosition}`),
+  //     stop: handleDragStop
+  //   });
+  // });
+  // };
+
+  // function handleDragStop(event, ui) {
+  //   var offsetXPos = parseInt(ui.offset.left);
+  //   var offsetYPos = parseInt(ui.offset.top);
+  //   $("#myModal").css("display", "flex");
+
+  //   $("#player-name").text(`Completed dragging.`);
+  // }
+
+  const initDrop = () => {
+    $("#main-grid").droppable({
+      accept: "#makeDraggable",
+      drop: function(ev, ui) {
+        let droppedItem = $(ui.draggable);
+        $(this).append(droppedItem);
+      }
+    });
+  };
+
+  function handleDropEvent(event, ui) {
+    var draggable = ui.draggable;
+    $("#myModal").css("display", "flex");
+
+    $("#player-name").text(
+      `Drop is completed. ${playerName}, let's continue by clicking on the dice.`
+    );
+  }
 
   const resetDice = () => {
     $(".dices").show();
@@ -108,6 +169,7 @@ $(() => {
     diceNum2 = 0;
     playerName = "";
     currentPosition = 0;
+    previousPosition = 0;
     catImg = "";
     $.ajax({ url: endpoint }).then(pullCat);
     // $("100").detach(catImg);
@@ -140,7 +202,9 @@ $(() => {
     console.log(playerAnswer);
     // set conditions:
     if (playerAnswer === correctAnswer && correctAnswer < 100) {
+      previousPosition = currentPosition;
       currentPosition = correctAnswer;
+
       //   insert modal
       $("#myModal").css("display", "flex");
 
@@ -149,10 +213,13 @@ $(() => {
       );
       $.ajax({ url: endpoint4 }).then(pullLadder);
 
+      initDrag();
+      initDrop();
       setTimeout(function() {
         $(`#${currentPosition}`).append(catImg);
-      }, 4000);
+      }, 5000);
     } else if (playerAnswer === correctAnswer && correctAnswer === 100) {
+      previousPosition = currentPosition;
       currentPosition = Math.min(correctAnswer, 100);
       //   insert modal
       $("#myModal").css("display", "flex");
@@ -164,7 +231,7 @@ $(() => {
 
       setTimeout(function() {
         $(`#${currentPosition}`).append(catImg);
-      }, 4000);
+      }, 5000);
 
       $("#trophy").on("click", event => {
         catImg.detach();
@@ -176,6 +243,7 @@ $(() => {
       // resetGame();
       // $.ajax({ url: endpoint }).then(pullCat);
     } else if (playerAnswer !== correctAnswer && currentPosition > change) {
+      previousPosition = currentPosition;
       //   insert modal
       $("#myModal").css("display", "flex");
       $("#player-name").text(
@@ -185,61 +253,68 @@ $(() => {
       currentPosition -= change;
 
       setTimeout(function() {
-        $(`#${currentPosition}`).append(catImg);
-      }, 500);
+        ç.append(catImg);
+      }, 2000);
     } else if (playerAnswer !== correctAnswer && currentPosition < change) {
+      previousPosition = currentPosition;
       $("#myModal").css("display", "flex");
       $("#player-name").text(
         `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
       );
       $.ajax({ url: endpoint3 }).then(pullSnake);
       currentPosition = 1;
-      $(`#${currentPosition}`).append(catImg);
+      setTimeout(function() {
+        $(`#${currentPosition}`).append(catImg);
+      }, 2000);
     }
   };
 
   //   event handlers here
-  $.ajax({ url: endpoint }).then(pullCat);
+  $("#startbox").on("click", event => {
+    color();
+    $.ajax({ url: endpoint }).then(pullCat);
+    greet();
 
-  // Game starts below:
-  $("#button1").on("click", event => {
-    event.preventDefault();
-    playerName = $("#input-box1").val();
-    console.log(playerName);
-    if (playerName === "") {
-      //insert modal
-      $("#myModal").css("display", "flex");
+    // Game starts below:
+    $("#button1").on("click", event => {
+      event.preventDefault();
+      playerName = $("#input-box1").val();
+      console.log(playerName);
+      if (playerName === "") {
+        //insert modal
+        $("#myModal").css("display", "flex");
 
-      $("#player-name").text("Please enter your name first!");
-    } else {
-      $("#myModal").css("display", "flex");
+        $("#player-name").text("Please enter your name first!");
+      } else {
+        $("#myModal").css("display", "flex");
 
-      $("#player-name").text(
-        `Hello ${playerName}. Let's begin by clicking each dice one by one.`
-      );
-      $("#input-box1").val("");
-    }
+        $("#player-name").text(
+          `Hello ${playerName}. Please click each dice one by one.`
+        );
+        $("#input-box1").val("");
+      }
+    });
+
+    $(".close").on("click", event => {
+      $("#myModal").css("display", "none");
+      $(".snake").hide();
+      $(".ladder").hide();
+    });
+
+    $(".dice").on("click", rollDice);
+    // $("#dice2").on("click", rollDice2);
+
+    $("#button2").on("click", event => {
+      event.preventDefault();
+      convert();
+      checkAnswer();
+      resetDice();
+    });
+
+    $("#button3").on("click", event => {
+      resetGame();
+    });
+
+    //   $.ajax({ url: endpoint3 }).then(pullSnake);
   });
-
-  $(".close").on("click", event => {
-    $("#myModal").css("display", "none");
-    $(".snake").hide();
-    $(".ladder").hide();
-  });
-
-  $("#dice1").on("click", rollDice1);
-  $("#dice2").on("click", rollDice2);
-
-  $("#button2").on("click", event => {
-    event.preventDefault();
-    convert();
-    checkAnswer();
-    resetDice();
-  });
-
-  $("#button3").on("click", event => {
-    resetGame();
-  });
-
-  //   $.ajax({ url: endpoint3 }).then(pullSnake);
 });

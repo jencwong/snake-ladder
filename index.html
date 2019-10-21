@@ -13,6 +13,10 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+    <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
   </head>
   <body>
     <h1>Snake and Ladder Addition Game</h1>
@@ -20,9 +24,12 @@
       <div id="child2">
         <div class="aside">
           <form id="playerName">
+                <div id="startbox">start game</div>
             <input type="text" placeholder="name" id="input-box1" />
-            <button type="submit" id="button1">Submit</button>
-
+            <button type="submit" id="button1">submit</button>
+            <input type="number" placeholder="result" id="input-box2" />
+            <button type="submit" id="button2">submit</button>
+            <button type="submit" id="button3">reset game</button>
             <div id="myModal" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
@@ -30,7 +37,6 @@
                 <p id="player-name">Dialogue</p>
               </div>
             </div>
-
             <iframe
               src="https://giphy.com/embed/Mvi1ZqG17NSso"
               frameBorder="0"
@@ -38,19 +44,18 @@
               allowFullScreen
             ></iframe>
             <!-- The Modal -->
-            <div id="placedice1">
-              <img class="dices" id="dice1" src="images/dice.png" />
-            </div>
-            <div id="placedice2">
-              <img class="dices" id="dice2" src="images/dice.png" />
+            <div class="dice">
+              <div id="placedice1">
+                <img class="dices" id="dice1" src="images/dice.png" />
+              </div>
+              <div id="placedice2">
+                <img class="dices" id="dice2" src="images/dice.png" />
+              </div>
             </div>
 
             <!-- <p>
                         <a href="https://giphy.com/stickers/Mvi1ZqG17NSso">via GIPHY</a>
                       </p> -->
-            <input type="number" placeholder="result" id="input-box2" />
-            <button type="submit" id="button2">Submit</button>
-            <button type="submit" id="button3">Reset Game</button>
           </form>
         </div>
         <div class="diceface">
@@ -169,8 +174,10 @@
           <div class="square" id="91">91</div>
         </div>
       </div>
+      <div id="makeDraggable"></div>
     </div>
-    <div id="startbox">Start Here</div>
+      <img id="gameImage" src="images/snake_ladderspic.png" />
+    </div>
     <script src="app.js" charset="utf-8"></script>
   </body>
 </html>
