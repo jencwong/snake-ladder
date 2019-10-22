@@ -80,6 +80,20 @@ $(() => {
     $(`#${previousPosition}`).append(ladderImg);
   };
 
+  // rotate the dice
+  const rotateDice = () => {
+    $(".dice").on("click", event => {
+      event.preventDefault();
+      $(".dices").addClass("rotate");
+      setTimeout(function() {
+        rollDice();
+      }, 1500);
+      setTimeout(function() {
+        $(".dices").removeClass("rotate");
+      }, 1500);
+    });
+  };
+
   // generate random numbers from 1 to 6 inclusive for dice 1
 
   const rollDice = () => {
@@ -92,6 +106,17 @@ $(() => {
     // hide the current dice
     $("#dice1").hide();
     $("#dice2").hide();
+
+    // clear out dice face if any
+    $("#placedice1")
+      .children()
+      .eq(1)
+      .remove();
+
+    $("#placedice2")
+      .children()
+      .eq(1)
+      .remove();
 
     // now display the roll
     $("#placedice1").append(
@@ -117,10 +142,22 @@ $(() => {
     );
   };
 
+  // tooltip function
+
+  $(function() {
+    $("#trophy").tooltip();
+    $(".dices").tooltip();
+  });
+
   // Make the element draggable
-  const initDrag = event => {
-    $("#makeDraggable").draggable();
-  };
+  // const initDrag = event => {
+  //   $("#makeDraggable").draggable({
+  //     // containment: $(`#main-grid`),
+  //     cursor: "move",
+  //     snap: $(`#${currentPosition}`),
+  //     stop: handleDragStop
+  //   });
+  // };
   // $(".container").on("click", ".catpix", event => {
   //   $(event.currentTarget).draggable({
   //     containment: $(`#${currentPosition}`),
@@ -134,29 +171,32 @@ $(() => {
   // function handleDragStop(event, ui) {
   //   var offsetXPos = parseInt(ui.offset.left);
   //   var offsetYPos = parseInt(ui.offset.top);
-  //   $("#myModal").css("display", "flex");
+  //   // $("#myModal").css("display", "flex");
 
-  //   $("#player-name").text(`Completed dragging.`);
+  //   // $("#player-name").text(`Completed dragging.`);
+  //   console.log("stopped dragging");
   // }
 
-  const initDrop = () => {
-    $("#main-grid").droppable({
-      accept: "#makeDraggable",
-      drop: function(ev, ui) {
-        let droppedItem = $(ui.draggable);
-        $(this).append(droppedItem);
-      }
-    });
-  };
+  // const initDrop = grid => {
+  //   $(`#${grid}`).droppable({
+  //     accept: "#makeDraggable",
+  //     drop: function(ev, ui) {
+  //       let droppedItem = $(ui.draggable);
+  //       $(this).append(droppedItem);
 
-  function handleDropEvent(event, ui) {
-    var draggable = ui.draggable;
-    $("#myModal").css("display", "flex");
+  //       console.log("You dropped it correctly!");
+  //     }
+  //   });
+  // };
 
-    $("#player-name").text(
-      `Drop is completed. ${playerName}, let's continue by clicking on the dice.`
-    );
-  }
+  // function handleDropEvent(event, ui) {
+  //   var draggable = ui.draggable;
+  //   $("#myModal").css("display", "flex");
+
+  //   $("#player-name").text(
+  //     `Drop is completed. ${playerName}, let's continue by clicking on the dice.`
+  //   );
+  // }
 
   const resetDice = () => {
     $(".dices").show();
@@ -200,6 +240,46 @@ $(() => {
     const playerAnswer = Math.min(Number($("#input-box2").val()), 100);
     // playerAnswer = Math.min(playerAnswer, 100);
     console.log(playerAnswer);
+
+    // Make the element draggable
+    const initDrag = event => {
+      $("#makeDraggable").draggable({
+        // containment: $(`#main-grid`),
+        cursor: "move",
+        snap: $(`#${currentPosition}`),
+        stop: handleDragStop
+      });
+    };
+
+    function handleDragStop(event, ui) {
+      var offsetXPos = parseInt(ui.offset.left);
+      var offsetYPos = parseInt(ui.offset.top);
+      // $("#myModal").css("display", "flex");
+
+      // $("#player-name").text(`Completed dragging.`);
+      console.log("stopped dragging");
+    }
+
+    const initDrop = grid => {
+      $(`#${currentPosition}`).droppable({
+        accept: "#makeDraggable",
+        drop: function(ev, ui) {
+          let droppedItem = $(ui.draggable);
+          $(this).append(droppedItem);
+
+          console.log("You dropped it correctly!");
+        }
+      });
+    };
+
+    function handleDropEvent(event, ui) {
+      var draggable = ui.draggable;
+      $("#myModal").css("display", "flex");
+
+      $("#player-name").text(
+        `Drop is completed. ${playerName}, let's continue by clicking on the dice.`
+      );
+    }
     // set conditions:
     if (playerAnswer === correctAnswer && correctAnswer < 100) {
       previousPosition = currentPosition;
@@ -209,14 +289,19 @@ $(() => {
       $("#myModal").css("display", "flex");
 
       $("#player-name").text(
-        `Correct! ${playerName} can move forward to box #${currentPosition}`
+        `Correct! ${playerName} your avatar will move to box #${currentPosition} and then go ahead click on the dice to continue.`
       );
-      $.ajax({ url: endpoint4 }).then(pullLadder);
+      // }, 5000);
 
-      initDrag();
-      initDrop();
+      // initDrag();
+      // initDrop();
+
+      $.ajax({ url: endpoint4 }).then(pullLadder);
       setTimeout(function() {
         $(`#${currentPosition}`).append(catImg);
+        // $(`#makeDraggable`).append(catImg);
+        // initDrag();
+        // initDrop(currentPosition);
       }, 5000);
     } else if (playerAnswer === correctAnswer && correctAnswer === 100) {
       previousPosition = currentPosition;
@@ -253,8 +338,12 @@ $(() => {
       currentPosition -= change;
 
       setTimeout(function() {
-        ç.append(catImg);
+        $(`#${currentPosition}`).append(catImg);
       }, 2000);
+
+      //   insert another prompt
+      $("#myModal").css("display", "flex");
+      $("#player-name").text(`${playerName}, click on the dice to continue.`);
     } else if (playerAnswer !== correctAnswer && currentPosition < change) {
       previousPosition = currentPosition;
       $("#myModal").css("display", "flex");
@@ -266,16 +355,28 @@ $(() => {
       setTimeout(function() {
         $(`#${currentPosition}`).append(catImg);
       }, 2000);
+
+      //   insert another prompt
+      $("#myModal").css("display", "flex");
+      $("#player-name").text(`${playerName}, click on the dice to continue.`);
     }
   };
 
   //   event handlers here
   $("#startbox").on("click", event => {
+    // first color the grid
     color();
+    // then pull cat image
     $.ajax({ url: endpoint }).then(pullCat);
+    // greet the player
     greet();
+    // hide the dialogue
+    // $(".close").on("click", event => {
+    //   $("#myModal").css("display", "none");
+    // });
 
     // Game starts below:
+    // on submitting name
     $("#button1").on("click", event => {
       event.preventDefault();
       playerName = $("#input-box1").val();
@@ -285,14 +386,21 @@ $(() => {
         $("#myModal").css("display", "flex");
 
         $("#player-name").text("Please enter your name first!");
+
+        // $(".close").on("click", event => {
+        //   $("#myModal").css("display", "none");
+        // });
       } else {
         $("#myModal").css("display", "flex");
 
         $("#player-name").text(
-          `Hello ${playerName}. Please click each dice one by one.`
+          `Hello ${playerName}. Please click on the dice.`
         );
-        $("#input-box1").val("");
       }
+      // $(".close").on("click", event => {
+      //   $("#myModal").css("display", "none");
+      // });
+      $("#input-box1").val("");
     });
 
     $(".close").on("click", event => {
@@ -301,20 +409,41 @@ $(() => {
       $(".ladder").hide();
     });
 
-    $(".dice").on("click", rollDice);
+    // $(".dice").on("click", () => {
+    //   $(".dice").toggleClass("rotate");
+    // });
+
+    // setTimeout(function() {
+    //   rollDice();
+    // }, 2000);
     // $("#dice2").on("click", rollDice2);
 
+    rotateDice();
+    // if ($(".dice").hasClass("rotate")) {
+    //   $(".dice").removeClass("rotate");
+    // }
+
     $("#button2").on("click", event => {
+      // $(".dice").removeClass("rotate");
       event.preventDefault();
       convert();
       checkAnswer();
       resetDice();
+      // $("#myModal").css("display", "flex");
+
+      // $("#player-name").text(
+      //   `${playerName}. Please click on the dices to continue.`
+      // );
+      rotateDice();
+      // $(".dice").removeClass("rotate");
+      // setTimeout(function() {
+      //   rollDice();
+      // }, 2000);
     });
 
     $("#button3").on("click", event => {
       resetGame();
     });
-
-    //   $.ajax({ url: endpoint3 }).then(pullSnake);
   });
+  //   $.ajax({ url: endpoint3 }).then(pullSnake);
 });
