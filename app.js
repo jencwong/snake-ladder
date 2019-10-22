@@ -144,10 +144,10 @@ $(() => {
 
   // tooltip function
 
-  $(function() {
-    $("#trophy").tooltip();
-    $(".dices").tooltip();
-  });
+  // $(function() {
+  //   $("#trophy").tooltip();
+  //   $(".dices").tooltip();
+  // });
 
   // Make the element draggable
   // const initDrag = event => {
