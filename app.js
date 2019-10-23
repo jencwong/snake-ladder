@@ -2,6 +2,15 @@ console.log("linked");
 
 $(() => {
   // variables here
+  window.onload = function(event) {
+    console.log("window running");
+    $("#makeDraggable").draggable({
+      revert: "invalid"
+    });
+    $("#makeDroppable").droppable({
+      drop: handleDropEvent
+    });
+  };
   const endpoint = "https://api.thecatapi.com/v1/images/search?";
 
   const endpoint2 =
@@ -23,7 +32,7 @@ $(() => {
   let snakeImg = "";
   const colors = ["#42f569", "#425df5", "#f54242", "#fff04f"];
 
-  //  callback functions here:
+  /////////  callback functions here /////////////////
   //   color the squares:
   const color = () => {
     for (i = 0; i < 100; i++) {
@@ -37,23 +46,31 @@ $(() => {
     $("#myModal").css("display", "flex");
     $("#player-name").text(`Hello, enter your name to get started.`);
   };
-  //  get cat picture for player function
-  // const pullCat = table => {
-  //   catImg = $("<img>")
-  //     .addClass("draggable")
-  //     .addClass("catpix")
-  //     .attr("src", table[0].url);
-  //   catImg.appendTo($("#startbox")).draggable();
-  // };
-
+  //  get a cat avatar for player function
   const pullCat = table => {
     catImg = $("<img>")
+      .addClass("draggable")
       .addClass("catpix")
       .attr("src", table[0].url);
     $("#startbox").append(catImg);
+    // catImg.appendTo($("#makeDraggable"));
   };
 
-  //   get winner stickery on click of trophy
+  // {
+  //   // containment: $(`#main-grid`),
+  //   cursor: "move",
+  //   snap: $(`#${currentPosition}`)
+  //   // stop: handleDragStop
+  // });
+
+  // const pullCat = table => {
+  //   catImg = $("<img>")
+  //     .addClass("catpix")
+  //     .attr("src", table[0].url);
+  //   $("#makeDraggable").append(catImg);
+  // };
+
+  //   get a winner sticker on click of trophy
   const pullSticker = data => {
     console.log(data);
     console.log(data.data[0].url);
@@ -64,7 +81,7 @@ $(() => {
     $("#trophy").hide();
   };
 
-  // get snake sticker
+  // get a snake sticker
   const pullSnake = image => {
     snakeImg = $("<img>")
       .addClass("snake")
@@ -72,12 +89,12 @@ $(() => {
     $(`#${previousPosition}`).append(snakeImg);
   };
 
-  //   get snake climbing ladder giphy
+  //   get a snake climbing ladder giphy
   const pullLadder = giphy => {
     ladderImg = $("<img>")
       .addClass("ladder")
       .attr("src", giphy.data[0].images.original.url);
-    $(`#${previousPosition}`).append(ladderImg);
+    $(`#${currentPosition}`).append(ladderImg);
   };
 
   // rotate the dice
@@ -143,60 +160,51 @@ $(() => {
   };
 
   // tooltip function
-
   // $(function() {
   //   $("#trophy").tooltip();
   //   $(".dices").tooltip();
   // });
 
-  // Make the element draggable
-  // const initDrag = event => {
-  //   $("#makeDraggable").draggable({
-  //     // containment: $(`#main-grid`),
-  //     cursor: "move",
-  //     snap: $(`#${currentPosition}`),
-  //     stop: handleDragStop
-  //   });
-  // };
-  // $(".container").on("click", ".catpix", event => {
-  //   $(event.currentTarget).draggable({
-  //     containment: $(`#${currentPosition}`),
-  //     cursor: "move",
-  //     snap: $(`#${currentPosition}`),
-  //     stop: handleDragStop
-  //   });
+  function handleDropEvent(event, ui) {
+    var draggable = ui.draggable;
+    $("#myModal").css("display", "flex");
+
+    $("#player-name").text(
+      `Dropped on the correct box!" ${playerName}, let's continue by clicking on the dice.`
+    );
+
+    console.log("Dropped on the correct box!");
+  }
+
+  function handleDragStop(event, ui) {
+    var offsetXPos = parseInt(ui.offset.left);
+    var offsetYPos = parseInt(ui.offset.top);
+    $("#myModal").css("display", "flex");
+
+    $("#player-name").text(`Completed dragging.`);
+    console.log("stopped dragging");
+  }
+  // $("#makeDroppable").on("drop", (event, ui) => {
+  //   event.preventDefault();
+  //   console.log("dropped");
+  //   console.log(ui.draggable);
+  //   $("#makeDroppable").append(ui.draggable);
   // });
-  // };
 
-  // function handleDragStop(event, ui) {
-  //   var offsetXPos = parseInt(ui.offset.left);
-  //   var offsetYPos = parseInt(ui.offset.top);
-  //   // $("#myModal").css("display", "flex");
+  // $(`#makeDroppable`).droppable({
+  //   accept: "#makeDraggable",
+  //   drop: function(ev, ui) {
+  //     let droppedItem = $(ui.draggable);
+  //     $(this).append(droppedItem);
 
-  //   // $("#player-name").text(`Completed dragging.`);
-  //   console.log("stopped dragging");
-  // }
+  //     console.log("You dropped it correctly!");
+  //   }
+  //   // $(`#${currentPosition}`).append($(`#makeDroppable`));
 
-  // const initDrop = grid => {
-  //   $(`#${grid}`).droppable({
-  //     accept: "#makeDraggable",
-  //     drop: function(ev, ui) {
-  //       let droppedItem = $(ui.draggable);
-  //       $(this).append(droppedItem);
-
-  //       console.log("You dropped it correctly!");
-  //     }
-  //   });
-  // };
-
-  // function handleDropEvent(event, ui) {
-  //   var draggable = ui.draggable;
-  //   $("#myModal").css("display", "flex");
-
-  //   $("#player-name").text(
-  //     `Drop is completed. ${playerName}, let's continue by clicking on the dice.`
-  //   );
-  // }
+  const appendDrop = currentPosition => {
+    console.log(currentPosition);
+    $(`#${currentPosition}`).append($(`#makeDroppable`));
+  };
 
   const resetDice = () => {
     $(".dices").show();
@@ -228,6 +236,7 @@ $(() => {
   };
 
   const checkAnswer = () => {
+    let catDiv = $("#makeDraggable");
     let change = diceNum1 + diceNum2;
     let correctAnswer = currentPosition + change;
     if (correctAnswer > 100) {
@@ -238,74 +247,33 @@ $(() => {
     console.log(correctAnswer);
 
     const playerAnswer = Math.min(Number($("#input-box2").val()), 100);
-    // playerAnswer = Math.min(playerAnswer, 100);
     console.log(playerAnswer);
 
-    // Make the element draggable
-    const initDrag = event => {
-      $("#makeDraggable").draggable({
-        // containment: $(`#main-grid`),
-        cursor: "move",
-        snap: $(`#${currentPosition}`),
-        stop: handleDragStop
-      });
-    };
-
-    function handleDragStop(event, ui) {
-      var offsetXPos = parseInt(ui.offset.left);
-      var offsetYPos = parseInt(ui.offset.top);
-      // $("#myModal").css("display", "flex");
-
-      // $("#player-name").text(`Completed dragging.`);
-      console.log("stopped dragging");
-    }
-
-    const initDrop = grid => {
-      $(`#${currentPosition}`).droppable({
-        accept: "#makeDraggable",
-        drop: function(ev, ui) {
-          let droppedItem = $(ui.draggable);
-          $(this).append(droppedItem);
-
-          console.log("You dropped it correctly!");
-        }
-      });
-    };
-
-    function handleDropEvent(event, ui) {
-      var draggable = ui.draggable;
-      $("#myModal").css("display", "flex");
-
-      $("#player-name").text(
-        `Drop is completed. ${playerName}, let's continue by clicking on the dice.`
-      );
-    }
     // set conditions:
     if (playerAnswer === correctAnswer && correctAnswer < 100) {
       previousPosition = currentPosition;
       currentPosition = correctAnswer;
-
+      $("#makeDraggable").append(catImg);
       //   insert modal
       $("#myModal").css("display", "flex");
 
       $("#player-name").text(
-        `Correct! ${playerName} your avatar will move to box #${currentPosition} and then go ahead click on the dice to continue.`
+        `Correct! ${playerName} drag your avatar to  box #${currentPosition} and then go ahead click on the dice to continue.`
       );
-      // }, 5000);
-
-      // initDrag();
-      // initDrop();
+      appendDrop(`${currentPosition}`);
 
       $.ajax({ url: endpoint4 }).then(pullLadder);
-      setTimeout(function() {
-        $(`#${currentPosition}`).append(catImg);
-        // $(`#makeDraggable`).append(catImg);
-        // initDrag();
-        // initDrop(currentPosition);
-      }, 5000);
+      // setTimeout(function() {
+      //   // $(`#${currentPosition}`).append(catImg);
+      //   $(`#makeDraggable`).append(catImg);
+      //   // $(`#${currentPosition}`).append($(`#makeDroppable`));
+
+      //   // initDrop(currentPosition);
+      // }, 5000);
     } else if (playerAnswer === correctAnswer && correctAnswer === 100) {
       previousPosition = currentPosition;
       currentPosition = Math.min(correctAnswer, 100);
+      $("#makeDraggable").append(catImg);
       //   insert modal
       $("#myModal").css("display", "flex");
 
@@ -315,10 +283,11 @@ $(() => {
       $.ajax({ url: endpoint4 }).then(pullLadder);
 
       setTimeout(function() {
-        $(`#${currentPosition}`).append(catImg);
+        $(`#${currentPosition}`).append(catDiv);
       }, 5000);
 
       $("#trophy").on("click", event => {
+        $(catDiv).detach();
         catImg.detach();
         $.ajax({ url: endpoint2 }).then(data => {
           console.log(data);
@@ -328,37 +297,58 @@ $(() => {
       // resetGame();
       // $.ajax({ url: endpoint }).then(pullCat);
     } else if (playerAnswer !== correctAnswer && currentPosition > change) {
+      $("#makeDraggable").append(catImg);
       previousPosition = currentPosition;
-      //   insert modal
-      $("#myModal").css("display", "flex");
-      $("#player-name").text(
-        `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
-      );
+      // //   insert modal
+      // $("#myModal").css("display", "flex");
+      // $("#player-name").text(
+      //   `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+      // );
       $.ajax({ url: endpoint3 }).then(pullSnake);
       currentPosition -= change;
+      appendDrop(`${currentPosition}`);
 
-      setTimeout(function() {
-        $(`#${currentPosition}`).append(catImg);
-      }, 2000);
+      // setTimeout(function() {
+      //   $(`#${currentPosition}`).append(catImg);
+      //   // $(".catpix").show();
+      // }, 2000);
 
       //   insert another prompt
-      $("#myModal").css("display", "flex");
-      $("#player-name").text(`${playerName}, click on the dice to continue.`);
-    } else if (playerAnswer !== correctAnswer && currentPosition < change) {
-      previousPosition = currentPosition;
       $("#myModal").css("display", "flex");
       $("#player-name").text(
-        `Sorry ${playerName}, the answer is incorrect, the snake got you and you move back to box #${currentPosition}`
+        `Sorry ${playerName}, the answer is incorrect, the snake got you.  Please drag and drop your avatar to box #${currentPosition}, and click on the dice to continue.`
       );
+    } else if (playerAnswer !== correctAnswer && currentPosition < change) {
+      // $("#makeDraggable").show();
+      $("#makeDraggable").append(catImg);
+      previousPosition = currentPosition;
+
+      // $(".catpix").hide();
+
+      // $("#makeDraggable")
+      //   .css("left", "0px")
+      //   .css("top", "0px");
+
+      // $(".catpix").show();
+      // // insert modal
+
+      // $("#myModal").css("display", "flex");
+      // $("#player-name").text(
+      //   `Sorry ${playerName}, the answer is incorrect, the snake got you, drag your avatar back to box #${currentPosition}`
+      // );
       $.ajax({ url: endpoint3 }).then(pullSnake);
       currentPosition = 1;
-      setTimeout(function() {
-        $(`#${currentPosition}`).append(catImg);
-      }, 2000);
+      appendDrop(`${currentPosition}`);
+      // setTimeout(function() {
+      //   $(`#${currentPosition}`).append(catImg);
+      //   // $(".catpix").show();
+      // }, 2000);
 
       //   insert another prompt
       $("#myModal").css("display", "flex");
-      $("#player-name").text(`${playerName}, click on the dice to continue.`);
+      $("#player-name").text(
+        `Sorry ${playerName}, the answer is incorrect, the snake got you.  Please drag and drop your avatar to box #${currentPosition}, and click on the dice to continue.`
+      );
     }
   };
 
@@ -406,7 +396,7 @@ $(() => {
     $(".close").on("click", event => {
       $("#myModal").css("display", "none");
       $(".snake").hide();
-      $(".ladder").hide();
+      $(".ladder").remove();
     });
 
     // $(".dice").on("click", () => {
@@ -434,7 +424,7 @@ $(() => {
       // $("#player-name").text(
       //   `${playerName}. Please click on the dices to continue.`
       // );
-      rotateDice();
+      // rotateDice();
       // $(".dice").removeClass("rotate");
       // setTimeout(function() {
       //   rollDice();
@@ -445,5 +435,4 @@ $(() => {
       resetGame();
     });
   });
-  //   $.ajax({ url: endpoint3 }).then(pullSnake);
 });

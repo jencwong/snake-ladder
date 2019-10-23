@@ -1,19 +1,20 @@
 # snake-ladder math addition game
 
-The goal of the game is for the player to reach the finish line which is square #100. To advance, the player has to answer the correct square number based on the roll of two dice.
+The goal of the game is for the player to reach the finish line which is square number 100. To advance, the player must answer the correct square number based on the roll of two dice.
 
-The dice give out random numbers. The result of the two dice will be the number of squares that the player advances to, if his/her answer is correct. If the answer is incorrect, the player will move back by the numbers from the dices.
+There are two dice which give out random numbers. The result of the two dice will be the number of squares that the player advances to, if his/her answer is correct. If the answer is incorrect, the player will move back by the numbers from the dices.
 
 The player repeat the process above until he/she reacheas the finish line,or the player has the option to reset the game.
 
 ## Getting Started
 
 The player press the start button and input his or her name and submit. A cat image to represent the player will appear at the start game button.
+
 Prompts for the player will pop-up, using a modal dialogue that pops up next to the dog gif in the aside column.
 
 ## Game Conditions
 
-If the player enters the right answer,a gif of cat climbing a ladder will appear. The player will advance by the numbers shown on both dice. If the answer is incorrect, a snake image appears and the player will retreat by the numbers shown on the dice or at maximum back to square #1. If the correct answer is greater than 100, the game will limit the player's forward move to square #100. When the player reaches square #100, he/she can then click the trophy to reveal the 'prize.'
+If the player enters the right answer,a gif of a cat climbing a ladder will appear. The player will be able to advance by the numbers shown on both dice. If the answer is incorrect, a snake image appears and the player will retreat by the numbers shown on the dice or at maximum back to square #1. If the correct answer is greater than 100, the game will limit the player's forward move to square #100. When the player reaches square #100, he/she can then click the trophy to reveal the 'prize.'
 
 ### Game Layout
 
@@ -44,13 +45,13 @@ This is a step by step sequence of events how the game runs:
 
 6. When the player enters the answer and presses the submit button, a checkAnswer function runs. There are 4 conditions to the checkAnswer. The correct answer is the sum of the player's current position plus the the number on dice 1 and dice 2.
 
-- If the correct answer is less than square #100, and the player's answer matches the correct answer, a dialogue box appears to confirm that the answer is correct. A gif of a cat climbing the ladder will appears at the current square. After a delay, the player's avatar will move forward to the new square position.
+- If the correct answer is less than square number 100, and the player's answer matches the correct answer, a dialogue box appears to confirm that the answer is correct and to prompt the player to drag the avatar into the correct square. A gif of a cat climbing the ladder appears. When the player drags the avatar into the correct box, a prompt will appear to confirm the drop, otherwise the avatar will revert to the original box.
 
-- If the correct answer is equal to or more than square 100, and the player's answer matches the correct answer, a dialogue box appears to congratulate the player for reaching the finish line and prompt the player to reveal the prize. The player's avatar will move to square 100. See step below 8.
+- If the correct answer is equal to or more than square 100, and the player's answer matches the correct answer, a dialogue box appears to congratulate the player for reaching the finish line and prompt the player to click on the trophy to reveal the prize. The player's avatar will disappear.
 
-- If the player's answer is wrong and the player is currently on square number that is greater than the numbers shown on the dice faces, a dialogue box will show up to tell the player that the answer is incorrect. A snake image appears on the current square and after a short delay, the player's avatar moves back by the number of squares shown on the dice faces.
+- If the player's answer is wrong and the player is currently on square number that is greater than the sum shown on the both dice 1 and dice 2, a dialogue box will show up to tell the player that the answer is incorrect. A snake image appears on the current square and the player is urged to drag the avatar back. The number of square to move back is the sum of dice 1 and dice 2. When the player drops the avatar onto the right box, a dialogue will show to confirm. Otherwise the avatar will revert back to the original box.
 
--If the player's answer is wrong and the player's current position is on the square that is less than the numbers shown on the dice faces,then a dialogue box appears to notify the player that his/her answer is incorrect and that he/she will move back to square 1. The player's avatar will automatically move back to square 1.
+-If the player's answer is wrong and the player's current position is on the square that is less than the numbers shown on the dice faces,then a dialogue box appears to notify the player that his/her answer is incorrect and that he/she will have to drag the avatar back to square 1. When the player drops the avatar onto the right box, a dialogue will show to confirm. Otherwise the avatar will revert back to the original box.
 
 7. The player will repeat step 4 to step 6 above until the player reaches the finish line. The player can always press the reset game button at any point in time.
 
@@ -73,6 +74,12 @@ When the screen width is 800px or smaller, the game layout changes to column vie
 When the screen width is 800px or wider, the game layout is row reverse with the panel on the right side of the game board. Likewise, the game board and the panel fit into the view width port.
 
 ### User Interface
+
+- Drag and drop feature for user to move the avatar forward and backward.
+- Clicking on the image of the 3D dice to reveal random dice numbers.
+- Inputing name and math answers in the respective input fields.
+- Clicking on the trophy to toggle a gif.
+- Start and reset game buttons.
 
 ### Game Image Resources
 

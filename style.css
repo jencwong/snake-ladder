@@ -191,7 +191,7 @@ form {
 .catpix {
   width: 6vw;
   height: 6vw;
-  position: relative
+  position: absolute;
   top: 0;
   left: 0;
 }
@@ -305,8 +305,8 @@ iframe {
 .snake {
   /* to overlay image on top of div */
   position: absolute;
-  height: 7vw;
-  width: 7vw;
+  height: 7.5vw;
+  width: 7.5vw;
   top: 0;
   left: 0;
 }
@@ -429,12 +429,17 @@ Add animations here
 
   .square {
     display: flex;
-    font-size: 1em;
+    font-size: 1.25em;
     height: 10%;
     width: 10%;
     position: relative;
     /* white-space: nowrap; */
     /*height: 4vw; */
+  }
+  #makeDraggable {
+    /* border: 1px solid red; */
+    width: 30px;
+    height: 30px;
   }
 
   h1 {
@@ -453,7 +458,7 @@ Add animations here
     width: 37.5%;
     height: 7%;
     margin: 3% 2.5%;
-    font-size: 1.75em;
+    font-size: 2em;
   }
 
   #button3 {
@@ -461,7 +466,7 @@ Add animations here
     width: 80%;
     height: 7%;
     margin: 3% 5% 3% 10%;
-    font-size: 1.75em;
+    font-size: 2em;
   }
 
   #input-box2,
@@ -470,7 +475,7 @@ Add animations here
     width: 37.5%;
     margin: 3% 2.5%;
     height: 7%;
-    font-size: 1.75em;
+    font-size: 2em;
   }
 
   #dice1,
@@ -480,7 +485,10 @@ Add animations here
     height: 7.5vw;
     padding: 2%;
   }
-
+  #makeDroppable {
+    /* border: 1px solid red; */
+    width: 100%;
+  }
   #face1,
   #face2,
   #face3,
@@ -535,7 +543,7 @@ Add animations here
   .modal-content {
     width: 65%;
     height: 80%;
-    font-size: 1.25em;
+    font-size: 1.75em;
   }
   #player-name {
     font-size: 1.5em;
@@ -551,19 +559,23 @@ Add animations here
     text-align: center;
   }
 
-  .ladder,
-  .snake {
+  .ladder {
     width: 5vw;
     height: 5vw;
+  }
+
+  .snake {
+    width: 7vw;
+    height: 7vw;
   }
 
   #gameImage {
     display: inline;
     position: absolute;
-    top: 80%;
+    top: 45%;
     right: 8%;
-    width: 35%;
-    height: 50%;
+    width: 25%;
+    height: 35%;
   }
 
   #startbox {
@@ -572,6 +584,6 @@ Add animations here
     height: 7%;
     margin: 5% 10%;
     vertical-align: middle;
-    font-size: 1.75em;
+    font-size: 1.85em;
   }
 }
