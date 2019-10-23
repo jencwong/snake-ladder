@@ -71,15 +71,11 @@ This is a step by step sequence of events how the game runs:
 
 When the screen width is 800px or smaller, the game layout changes to column view. The game control panel is stacked on top of the game board. Both the game board and the panel fit into the view width port so that any overflow will only be vertical scrolls.
 
-![ScreenShot Small](<https://raw.github.com/{jencwong}/{snake-ladder}/{master}/{snake-ladder%20(iPhone%206_7_8).png}>)
-
-![screen shot small](//Users/Jschandra/dev/snake-ladder/snake-ladder (iPhone 6_7_8).png?raw=true "Small device screenshot")
+![ScreenShot Small](https://github.com/jencwong/snake-ladder/issues/1#issue-511332831)
 
 When the screen width is 800px or wider, the game layout is row reverse with the panel on the right side of the game board. Likewise, the game board and the panel fit into the view width port.
 
-![ScreenShot Large](https://raw.github.com/{jencwong}/{snake-ladder}/{master}/{screenschot%20snake-ladder%20ipad%20pro.png})
-
-![screen shot large](//Users/Jschandra/dev/snake-ladder/screenschot snake-ladder ipad pro.png?raw=true "Large device screenshot")
+![ScreenShot Large](https://github.com/jencwong/snake-ladder/issues/2#issue-511337385)
 
 ### User Interface
 
